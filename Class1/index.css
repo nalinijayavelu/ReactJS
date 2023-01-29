@@ -1,3 +1,46 @@
-#root {
+/* #root {
   background-color: red;
+} */
+.header {
+  display: flex;
+  justify-content: space-between;
+  background-color: #f76969;
+  border-radius: 4px;
+  padding: 10px;
+  box-shadow: 10px 15px 19px -10px #888;
+}
+.nav-items > ul {
+  list-style-type: none;
+  display: flex;
+}
+
+.nav-items > ul > li {
+  padding: 10px;
+}
+
+.logo {
+  width: 60px;
+  height: 70px;
+}
+
+.card {
+  width: 270px;
+  padding: 10px;
+  margin: 10px;
+  border: 1px solid grey;
+}
+
+.card > img {
+  /* it will take full width of card */
+  width: 100%;
+}
+
+/* .card > img:hover {
+  box-shadow: rgb(184, 37, 37);
+} */
+
+/* The flex-wrap CSS property sets whether flex items are forced onto one line or can wrap onto multiple lines */
+.restaurent-list {
+  display: flex;
+  flex-wrap: wrap;
 }

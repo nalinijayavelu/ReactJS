@@ -1,21 +1,42 @@
 import { restaurentList } from "./config";
 import RestaurentCard from "./RestaurentCard";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import searchImage from "../images/search-icon.png";
+import Shimmer from "./Shimmer";
+import { Link } from "react-router-dom";
 
 function filterData(searchtxt, restaurentsList) {
-  console.log("searchtxt ", searchtxt);
-  console.log("restaurentsList ", restaurentsList);
   const result = restaurentsList.filter((restau) =>
-    restau.data.data.name.toLowerCase().includes(searchtxt.toLowerCase())
+    restau?.data?.name?.toLowerCase().includes(searchtxt.toLowerCase())
   );
   return result;
 }
 
 const Body = () => {
+  const [filteredRestaurents, setFilteredRestaurents] = useState([]);
   const [searchInput, setSearchInput] = useState("");
-  const [searchClicked, setSearchclicked] = useState(false);
-  const [restaurants, setRestaurents] = useState(restaurentList);
-  return (
+  const [restaurants, setRestaurents] = useState([]);
+
+  useEffect(() => {
+    getRestaurants();
+  }, []);
+
+  async function getRestaurants() {
+    const data = await fetch(
+      "https://www.swiggy.com/dapi/restaurants/list/v5?lat=21.1702401&lng=72.83106070000001&page_type=DESKTOP_WEB_LISTING"
+    );
+    const json = await data.json();
+    console.log(json);
+    setRestaurents(json?.data?.cards[2]?.data?.data?.cards);
+    setFilteredRestaurents(json?.data?.cards[2]?.data?.data?.cards);
+  }
+
+  //early return (not render component)
+  if (!restaurants) return null;
+
+  return restaurants?.length === 0 ? (
+    <Shimmer />
+  ) : (
     <>
       <div className="search-container">
         <input
@@ -36,10 +57,10 @@ const Body = () => {
             {
               console.log("data ", data);
             }
-            setRestaurents(data);
+            setFilteredRestaurents(data);
           }}
         >
-          Search
+          <img src={searchImage} alt="search-image" className="search-image" />
         </button>
       </div>
       <div className="restaurent-list">
@@ -47,12 +68,18 @@ const Body = () => {
         {/* <RestaurentCard restaurant={restaurentList[0]} />
         <RestaurentCard restaurant={restaurentList[1]} />
         <RestaurentCard restaurant={restaurentList[2]} /> */}
-        {restaurants.map((restaurent) => {
-          return (
-            <RestaurentCard
-              {...restaurent.data.data}
-              key={restaurent.data.data.id}
-            />
+        {filteredRestaurents.map((restaurent) => {
+          console.log("------", restaurent);
+          if (!filteredRestaurents) return null;
+          return filteredRestaurents?.length === 0 ? (
+            <Shimmer />
+          ) : (
+            <Link
+              to={"/restaurent/" + restaurent.data.id}
+              key={restaurent.data.id}
+            >
+              <RestaurentCard {...restaurent.data} key={restaurent.data.id} />
+            </Link>
           );
         })}
         {/* <RestaurentCard {...restaurentList[0].data.data} />

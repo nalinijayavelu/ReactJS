@@ -1,5 +1,9 @@
+import { useState } from "react";
 import Title from "./Title";
+import userIcon from "../images/user_icon.png";
+import { Link } from "react-router-dom";
 const HeaderComponent = () => {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   return (
     <div className="header">
       {/* {title} */}
@@ -10,12 +14,29 @@ const HeaderComponent = () => {
       <Title />
       <div className="nav-items">
         <ul>
-          <li>Home</li>
-          <li>About</li>
-          <li>Contact</li>
+          <li>
+            <Link to="/"> Home</Link>
+          </li>
+          <li>
+            <Link to="/about">About</Link>
+          </li>
+          <li>
+            <Link to="/contact">Contact</Link>
+          </li>
+          <li></li>
           <li>Cart</li>
         </ul>
       </div>
+      {/* <div className="user-Icon">
+        <a href="#">
+          <img src={userIcon} alt="usericon" />
+        </a>
+      </div> */}
+      {isLoggedIn ? (
+        <button onClick={() => setIsLoggedIn(false)}>Logout</button>
+      ) : (
+        <button onClick={() => setIsLoggedIn(true)}>Login</button>
+      )}
     </div>
   );
 };

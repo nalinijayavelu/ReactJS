@@ -6,7 +6,7 @@ const RestaurentCard = ({
 }) => {
   // const { name, cuisines, cloudinaryImageId, lastMileTravelString } =
   //   restaurant.data.data;
-
+  console.log(name);
   return (
     <div className="card">
       {/* <img

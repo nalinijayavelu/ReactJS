@@ -8,6 +8,8 @@ import Contact from "./components/Contact";
 import About from "./components/About";
 import Error from "./components/Error";
 import RestaurentMenu from "./components/RestaurentMenu";
+import Profile from "./components/Profile";
+import ProfileClass from "./components/ProfileClass";
 // const heading = React.createElement(
 //   "h1",
 //   { id: "title1", key: "h1", className: "h1Title" },
@@ -86,6 +88,12 @@ const appRouter = createBrowserRouter([
       {
         path: "/about",
         element: <About />,
+        children: [
+          {
+            path: "profile",
+            element: <ProfileClass />,
+          },
+        ],
       },
       {
         path: "/contact",

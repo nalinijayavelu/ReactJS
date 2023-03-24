@@ -4,13 +4,8 @@ import { useState, useEffect } from "react";
 import searchImage from "../images/search-icon.png";
 import Shimmer from "./Shimmer";
 import { Link } from "react-router-dom";
-
-function filterData(searchtxt, restaurentsList) {
-  const result = restaurentsList.filter((restau) =>
-    restau?.data?.name?.toLowerCase().includes(searchtxt.toLowerCase())
-  );
-  return result;
-}
+import { filterData } from "../utils/helper";
+import useOnline from "../utils/useOnline";
 
 const Body = () => {
   const [filteredRestaurents, setFilteredRestaurents] = useState([]);
@@ -29,6 +24,12 @@ const Body = () => {
     console.log(json);
     setRestaurents(json?.data?.cards[2]?.data?.data?.cards);
     setFilteredRestaurents(json?.data?.cards[2]?.data?.data?.cards);
+  }
+
+  const isOnline = useOnline();
+
+  if (!isOnline) {
+    return <h1>🔴Offline, Please check you internet Connectivity</h1>;
   }
 
   //early return (not render component)

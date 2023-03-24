@@ -23,7 +23,9 @@ const HeaderComponent = () => {
           <li>
             <Link to="/contact">Contact</Link>
           </li>
-          <li></li>
+          <li>
+            <Link to="/instamart">InstaMart</Link>
+          </li>
           <li>Cart</li>
         </ul>
       </div>

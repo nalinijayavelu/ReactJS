@@ -1,4 +1,4 @@
-import React from "react";
+import React, { lazy, Suspense } from "react";
 import ReactDOM from "react-dom/client";
 import Footer from "./components/Footer";
 import HeaderComponent from "./components/HeaderComponent";
@@ -61,6 +61,9 @@ import ProfileClass from "./components/ProfileClass";
 //   );
 // };
 
+//Dynamic import or lazy loading
+const Instamart = lazy(() => import("./components/Instamart"));
+
 const AppLayout = () => {
   return (
     <>
@@ -102,6 +105,14 @@ const appRouter = createBrowserRouter([
       {
         path: "/restaurent/:id",
         element: <RestaurentMenu />,
+      },
+      {
+        path: "/instamart",
+        element: (
+          <Suspense>
+            <Instamart />
+          </Suspense>
+        ),
       },
     ],
   },
